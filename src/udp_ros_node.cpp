@@ -18,8 +18,9 @@ int main(int argc, char **argv) {
     struct sockaddr_in servaddr;
     double buf[16] = { 0 };
     struct sigaction act;
+    bool no_data = true;
 
-    printf("hello %s\n", argv[1]);
+    printf("trying %s\n", argv[1]);
 
     memset(&act, 0, sizeof(act));
     act.sa_handler = &sig_handler;
@@ -45,6 +46,10 @@ int main(int argc, char **argv) {
     while (true) {
         int len = recv(sockfd, buf, sizeof(buf), 0);
         if (len > 0) {
+            if (no_data) {
+                no_data = false;
+                printf("connected\n");
+            }
             std_msgs::Header header;
             header.frame_id = "map";
             header.stamp = ros::Time::now();

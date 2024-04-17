@@ -1,4 +1,5 @@
 <launch>
-    <node name="udp_ros" pkg="udp_ros" type="udp_ros_node" args="192.168.0.41" output="screen" />
+    <node name="udp_ros" pkg="udp_ros" type="udp_ros_node" args="$(arg ip)" output="screen" />
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find udp_ros)/src/vins.rviz" />
+    <node name="rec_vins_pose" pkg="rosbag" type="record" args="odometry" output="screen"/>
 </launch>
